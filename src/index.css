@@ -1,0 +1,7 @@
+.pokemonCard {
+
+}
+
+.pokemonCard .name {
+  text-transform: capitalize;
+}
