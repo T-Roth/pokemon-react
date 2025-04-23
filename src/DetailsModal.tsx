@@ -5,8 +5,14 @@ import { useEffect, useState } from "react";
 type Ability = {
   name: string;
 };
+
+type Move = {
+  name: string;
+}
 type ApiDetailsResponse = {
   abilities: { ability: Ability }[];
+  moves: {move: Move}[];
+  cries: {latest: string, legacy: string};
 };
 
 type DetailsModalProps = {
@@ -57,21 +63,30 @@ export default function DetailsModal({
       </Modal.Header>
       <Modal.Body>
         <Tabs
-          defaultActiveKey="profile"
+          defaultActiveKey="activities"
           id="details-tabs"
           className="mb-3"
           fill
         >
           <Tab eventKey="activities" title="Activities">
             {details?.abilities.map(({ ability }) => {
-              return <div key={ability.name}>{ability.name}</div>;
+              return <div className="activity" key={ability.name}>{ability.name}</div>;
             })}
           </Tab>
           <Tab eventKey="moves" title="Moves">
-            Tab content for Profile
+            {details?.moves.map(({ move }) => {
+              return <div className="move" key={move.name}>{move.name}</div>;
+            })}
           </Tab>
           <Tab eventKey="cries" title="Cries">
-            Tab content for Loooonger Tab
+            <audio controls>
+              <track default kind="captions" />
+              <source src={details?.cries.latest} type="audio/ogg" />
+            </audio>
+            <audio controls>
+              <track default kind="captions" />
+              <source src={details?.cries.legacy} type="audio/ogg" />
+            </audio>
           </Tab>
           <Tab eventKey="forms" title="Forms">
             Tab content for Contact

@@ -5,3 +5,14 @@
 .pokemonCard .name {
   text-transform: capitalize;
 }
+
+
+.move,
+.activity {
+  text-transform: capitalize;
+}
+
+.tab-content > .tab-pane {
+  height: 20em;
+  overflow: auto
+}
