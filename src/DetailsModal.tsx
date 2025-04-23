@@ -1,13 +1,13 @@
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Tab, Tabs } from "react-bootstrap";
 import { Pokemon } from "./App";
 import { useEffect, useState } from "react";
 
 type Ability = {
-    name: string;
-}
+  name: string;
+};
 type ApiDetailsResponse = {
-    abilities: {ability: Ability}[];
-}
+  abilities: { ability: Ability }[];
+};
 
 type DetailsModalProps = {
   pokemon: Pokemon | null;
@@ -56,16 +56,27 @@ export default function DetailsModal({
         <Modal.Title>{pokemon.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {
-            details?.abilities.map(({ability})=> {
-                return (
-                    <div key={ability.name}>
-                        {ability.name}
-                    </div>
-                );
-            })
-        }
-
+        <Tabs
+          defaultActiveKey="profile"
+          id="details-tabs"
+          className="mb-3"
+          fill
+        >
+          <Tab eventKey="activities" title="Activities">
+            {details?.abilities.map(({ ability }) => {
+              return <div key={ability.name}>{ability.name}</div>;
+            })}
+          </Tab>
+          <Tab eventKey="moves" title="Moves">
+            Tab content for Profile
+          </Tab>
+          <Tab eventKey="cries" title="Cries">
+            Tab content for Loooonger Tab
+          </Tab>
+          <Tab eventKey="forms" title="Forms">
+            Tab content for Contact
+          </Tab>
+        </Tabs>
       </Modal.Body>
     </Modal>
   );
