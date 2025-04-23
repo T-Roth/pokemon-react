@@ -8,11 +8,17 @@ type Ability = {
 
 type Move = {
   name: string;
+};
+
+type Stat = {
+    name: string;
 }
+
 type ApiDetailsResponse = {
-  abilities: { ability: Ability }[];
-  moves: {move: Move}[];
-  cries: {latest: string, legacy: string};
+    stats: { base_stat: number; stat: { name: string } }[];
+    abilities: { ability: { name: string } }[];
+    moves: { move: { name: string } }[];
+    cries: { latest: string; legacy: string };
 };
 
 type DetailsModalProps = {
@@ -63,33 +69,57 @@ export default function DetailsModal({
       </Modal.Header>
       <Modal.Body>
         <Tabs
-          defaultActiveKey="activities"
+          defaultActiveKey="stats"
           id="details-tabs"
           className="mb-3"
           fill
         >
+        <Tab eventKey="stats" title="Stats">
+            {details?.stats.map(({base_stat, stat}) => {
+              return (
+                <div className="stat" key={stat.name}>
+                  {stat.name}: {base_stat}
+                </div>
+              );
+            })}
+          </Tab> 
           <Tab eventKey="activities" title="Activities">
             {details?.abilities.map(({ ability }) => {
-              return <div className="activity" key={ability.name}>{ability.name}</div>;
+              return (
+                <div className="activity" key={ability.name}>
+                  {ability.name}
+                </div>
+              );
             })}
           </Tab>
           <Tab eventKey="moves" title="Moves">
             {details?.moves.map(({ move }) => {
-              return <div className="move" key={move.name}>{move.name}</div>;
+              return (
+                <div className="move" key={move.name}>
+                  {move.name}
+                </div>
+              );
             })}
           </Tab>
           <Tab eventKey="cries" title="Cries">
-            <audio controls>
+            <audio
+              controls
+              ref={(audio) => {
+                if (audio) audio.volume = 0.5; // Set volume to 50%
+              }}
+            >
               <track default kind="captions" />
               <source src={details?.cries.latest} type="audio/ogg" />
             </audio>
-            <audio controls>
+            <audio
+              controls
+              ref={(audio) => {
+                if (audio) audio.volume = 0.5; // Set volume to 50%
+              }}
+            >
               <track default kind="captions" />
               <source src={details?.cries.legacy} type="audio/ogg" />
             </audio>
-          </Tab>
-          <Tab eventKey="forms" title="Forms">
-            Tab content for Contact
           </Tab>
         </Tabs>
       </Modal.Body>

@@ -7,6 +7,11 @@
 }
 
 
+.modal-dialog .modal-title {
+  text-transform: capitalize;
+}
+
+.stat,
 .move,
 .activity {
   text-transform: capitalize;
